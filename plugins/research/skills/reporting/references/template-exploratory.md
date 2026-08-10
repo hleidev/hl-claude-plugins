@@ -40,3 +40,11 @@ Where someone new to this space typically starts: a specific tool, resource, con
 ### Open Questions
 Up to 2 questions that can only be answered with more context from the user. Omit section entirely if none.
 Each question must be answerable in one sentence.
+
+### Sources & Verification
+Title this section in the output language. Two lists, nothing else:
+
+- **Opened at the source** — sources you actually opened in Phase 1 Step 4(b). Everything behind a `[High]` tag belongs here.
+- **Search summary only** — sources you saw as search results and did not open; these support `[Medium]` at best.
+
+Use readable markdown links. This section is the only place links belong — keep them out of the body prose.

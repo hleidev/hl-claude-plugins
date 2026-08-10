@@ -46,3 +46,11 @@ Failure modes that practitioners have hit with this method — even if the appro
 Up to 2 decisions that research cannot resolve — only the user's specific context can answer them.
 Omit section entirely if none.
 Each question must be answerable in one sentence.
+
+### Sources & Verification
+Title this section in the output language. Two lists, nothing else:
+
+- **Opened at the source** — sources you actually opened in Phase 1 Step 4(b). Everything behind a `[High]` tag belongs here.
+- **Search summary only** — sources you saw as search results and did not open; these support `[Medium]` at best.
+
+Use readable markdown links. This section is the only place links belong — keep them out of the body prose.

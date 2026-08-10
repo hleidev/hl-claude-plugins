@@ -24,10 +24,10 @@ Create these tasks:
 
 1. Phase 0 · classify research type + blind exploration (parallel searches)
 2. Phase 0 · separate hard constraints vs. challenged assumptions
-3. Phase 0 · ask (≤3 questions incl. Outcome Alignment), then confirm plan
+3. Phase 0 · frame two readings + ask (≤3 questions incl. Outcome Alignment), then confirm plan
 4. Phase 1 · parallel dimension searches (official + community each)
 5. Phase 1 · per-dimension recommendation + source-quality tags
-6. Phase 1 · adversarial check on every recommendation
+6. Phase 1 · adversarial check + open every source relied on
 7. Phase 1 · cross-dimension synthesis + self-review checkpoint
 8. Phase 1 · write the typed report
 
@@ -50,7 +50,7 @@ If the user mentions an existing file, tool, implementation, or prior attempt, R
 | Comparative | Has ≥2 options                 | Choose between them  | "A vs B", "should I use X or Y", "comparing"                           |
 | Validatory  | Has a specific plan or approach | Confirm or refute it | "is this right", "will this work", "I'm planning to", "my approach is" |
 
-For mixed signals, classify by the primary need.
+For mixed signals, classify by the primary need. Never default to Comparative just because the topic mentions several things.
 
 **Step 3 — Context assessment:**
 
@@ -92,13 +92,15 @@ Translate unknowns into need-based questions: ask about outcomes, constraints, a
 - Wrong: "Should we use Mermaid or HTML?"
 - Right: "Do you want the output to open in a browser, or appear inline in the terminal?"
 
-**Step 7 — Outcome Alignment Check (mandatory, cannot skip):**
+Then gate every candidate question: **would any answer change what you search next?** If not, drop it — a question that cannot move the research plan spends the user's attention and buys nothing.
 
-Before asking the user, formulate and include this question in the Phase 0 output:
+**Step 7 — Frame the ask (mandatory, cannot skip):**
 
-> "In [user's core scenario], what does the user see or experience when this is 'done'?"
+Two things go in front of the user before any question:
 
-This question must appear regardless of how clear the rest of the context seems. The user may answer "I don't care, follow mainstream" — that is a valid and complete answer. But the question must be asked.
+**Two candidate readings** — state two materially different readings of what the user is after, marked as provisional guesses they are free to reject. Rejecting a concrete proposal is far easier than answering an open question, which is the whole point for a user who cannot yet articulate the goal. Two, not one: a single proposal anchors an already-uncertain user into agreeing with it.
+
+**The Outcome Alignment question** — "In [user's core scenario], what does the user see or experience when this is 'done'?" It must appear regardless of how clear the rest of the context seems. The user may answer "I don't care, follow mainstream" — that is a valid and complete answer. But the question must be asked.
 
 User fast path: if the user explicitly says "skip phase 0", this step may be skipped.
 
@@ -118,6 +120,10 @@ Present Phase 0 output and wait for answers. Once the user responds, synthesize 
 
 **Challenged assumptions** (if any):
 - "<user's stated assumption or direction>" — research shows: <one-sentence contradicting evidence>
+
+**Two possible readings** (provisional — reject either freely):
+- A: <one-sentence reading of what the user wants>
+- B: <a materially different reading, not a variant of A>
 
 A few questions to narrow the research direction:
 1. <Outcome Alignment question — what does "done" look like for the user?>
@@ -155,7 +161,7 @@ Omit the premise constraints section if no dimensions were pruned.
 
 Hard constraints are fixed. Assumptions challenged in Phase 0 must be researched further — do not revert to treating them as constraints.
 
-**Step 1 — Read `references/source-catalog.md`** — select source types most relevant to this topic's domain.
+**Step 1 — Read `references/source-catalog.md`** — select source types most relevant to this topic's domain; never default to "docs + community" for every topic.
 
 **Step 2 — Search all dimensions in a single batch** — all searches fire in one response; never search one dimension, process, then the next. For each dimension: two searches simultaneously — one official/authoritative, one community/practitioner. Use source types from the catalog. Do not use context7 for general research topics (SEO, architecture, community experience) — context7 is for library/framework API documentation only.
 
@@ -163,21 +169,35 @@ Hard constraints are fixed. Assumptions challenged in Phase 0 must be researched
 
 After each recommendation, append a source quality tag based on the evidence gathered:
 
-- `[High]` = ≥2 independent authoritative sources agree (official docs, peer-reviewed papers)
+- `[High]` = ≥2 independent authoritative sources agree (official docs, peer-reviewed papers), **and you opened each of them with WebFetch**
 - `[Medium]` = 1 authoritative source OR community consensus across ≥2 platforms
 - `[Low]` = practitioner experience only, or adversarial check raised concerns
+
+**A source you have only seen as a search-result summary caps at `[Medium]`.** Search snippets are written by the search layer, not by the source; whether two sources genuinely agree, and whether either one actually says what the snippet implies, cannot be judged without opening them.
+
+Tags assigned here are provisional — `[High]` is not earned until Step 4(b) has actually opened the sources.
 
 Taste, aesthetic, or preference-type recommendations (e.g. visual style) cap at `[Medium]` — no authoritative source can settle a matter of taste, so they are never `[High]`. If nearly every dimension comes out `[High]`, re-check the tags: the tag is calibration, not decoration.
 
 In the Chinese report, label this "Source Quality" — not "Confidence Level" — to avoid false precision.
 
-**Step 4 — Adversarial check** — for each recommended option from Step 3, run one targeted search per recommendation in a single batch using negation-intent queries: `"<X> problems"`, `"why not use <X>"`, `"<X> pitfalls"`. If results surface a failure mode that undermines the recommendation, revise it before proceeding to Step 5.
+**Step 4 — Challenge the recommendation** — two passes, each batched in a single response:
+
+**(a) Adversarial search** — for each recommended option from Step 3, one targeted search using negation-intent queries: `"<X> problems"`, `"why not use <X>"`, `"<X> pitfalls"`. If results surface a failure mode that undermines the recommendation, revise it.
+
+**(b) Source verification** — WebFetch every source you intend to lean on. A source counts as verified only when the page opens **and** its content actually supports the claim you attached to it. Do not substitute a self-check ("am I sure?") for this — a model asking itself whether its sources are real reliably answers yes. Opening the page is a deterministic test; the reflection is not. Handle each outcome:
+
+- **Opens and supports the claim** → keep; `[High]` is now available for it
+- **Opens but does not say what you assumed** → fix the claim to match the source, or drop it
+- **Does not resolve** → treat the source as nonexistent: remove it and re-tag anything that depended on it
+
+If either pass removes the evidence under a recommendation, return to Step 3 and re-derive it.
 
 **Step 5 — Cross-dimension synthesis** — verify the recommended combination works across all axes. Check for conflicts.
 
 If synthesis reveals a Phase 0 hard constraint is actually inapplicable, or a critical new dimension emerges that would change the entire research direction: stop, surface the finding to the user, and wait for direction before writing the report.
 
-**Step 6 — Resolve remaining gaps** — if synthesis revealed knowledge gaps, run targeted searches now to fill them before writing the report. Only escalate to Open Questions if a gap genuinely cannot be resolved by any search (i.e., the answer depends on the user's specific preferences or constraints).
+**Step 6 — Resolve remaining gaps** — if synthesis revealed knowledge gaps, run targeted searches now to fill them before writing the report. Only escalate to Open Questions if a gap genuinely cannot be resolved by any search (i.e., the answer depends on the user's specific preferences or constraints). Max 2 Open Questions; omit the section entirely if nothing genuinely requires user input.
 
 **Step 7 — Self-review checkpoint** — before loading the template, answer the following six questions. All six must pass; if any fails, return to Step 3 or Step 6 and revise before proceeding.
 
@@ -185,7 +205,7 @@ If synthesis reveals a Phase 0 hard constraint is actually inapplicable, or a cr
 2. **Constraint compliance**: Does every recommendation comply with all hard constraints from Phase 0?
 3. **Cross-dimension conflict**: Do any recommendations across dimensions contradict each other (e.g., one recommends lightweight while another pulls in a large dependency)?
 4. **Challenged assumptions handled**: Were all assumptions flagged as "challenged" in Phase 0 explicitly addressed in the recommendations?
-5. **Source honesty**: Are all "mainstream" or "industry standard" claims backed by a named source?
+5. **Source honesty**: Are all "mainstream" or "industry standard" claims backed by a named source, and was every source carrying a `[High]` tag actually opened in Step 4?
 6. **Source quality tagged**: Does each per-dimension recommendation carry a `[High / Medium / Low]` source quality tag?
 
 **Step 8 — Write report** — Read the template matching the confirmed research type, then generate the full report in Chinese following its structure:
@@ -195,33 +215,21 @@ If synthesis reveals a Phase 0 hard constraint is actually inapplicable, or a cr
 - Comparative → `references/template-comparative.md`
 - Validatory → `references/template-validatory.md`
 
-Add a **Research Sources** line in the report header listing the source types actually consulted (e.g., `Google Search Central official docs, Stack Overflow, GitHub Issues, Hacker News`). Output in conversation AND write to `/tmp/research-<date>-<slug>.md` using the Write tool (`<date>` = today's date in YYYY-MM-DD format; `<slug>` = 3–5 word English description of the topic in lowercase with hyphens — translate from the original language if needed, e.g. a Chinese topic becomes its English equivalent).
+Add a **Research Sources** line in the report header listing the source types actually consulted (e.g., `Google Search Central official docs, Stack Overflow, GitHub Issues, Hacker News`).
+
+The template's closing **Sources & Verification** section is mandatory — it is what makes Step 4(b) observable rather than a promise.
+
+Output in conversation AND write to `/tmp/research-<date>-<slug>.md` using the Write tool (`<date>` = today's date in YYYY-MM-DD format; `<slug>` = 3–5 word English description of the topic in lowercase with hyphens — translate from the original language if needed, e.g. a Chinese topic becomes its English equivalent).
 
 ## Rules
 
-### Both Phases
+These are the standing rules. Everything else lives in the step it belongs to — do not expect a rule here to repeat it.
 
-- **All searches in parallel** — Phase 0 blind exploration and Phase 1 dimension searches must be batched in a single response; never run one search, wait, then the next
+- **All searches in parallel** — every batch of searches fires in one response; never run one search, wait, then the next
 - **All searches in English** — all WebSearch queries must be in English regardless of the topic's language; search quality degrades significantly otherwise
-- **Output language** — default Chinese; if the user uses or requests another language, switch all output (discovery, questions, report, commentary) to it. This governs every "write in Chinese" instruction above
-- **Research type first** — classify type before deciding output structure; never default to Comparative
-- **Assumptions vs. constraints** — user-stated approaches, tools, and paths are assumptions, not hard constraints; actively challenge them when research contradicts them
-- **Official sources first** — do not recommend what you have not verified at the source
-- **Default + escape hatch, not menus** — one recommendation per dimension; alternatives only for specific conditions the user might hit
-- **Give a concrete recommendation** — "it depends" with no follow-up is not acceptable
-- **Research only** — surface the report; do not implement findings
-
-### Phase 0
-
-- **Need-based questions only** — questions must be answerable without domain knowledge; reframe if not
-- **Prune obvious dimensions** — if blind exploration yields a clear winner, state it as premise constraint, not a research dimension
+- **Official sources first** — do not recommend what you have not opened at the source
 - **Phase 0 question cap** — maximum 3 questions total in Phase 0 output (including Outcome Alignment); additional unknowns must be resolved through blind exploration, not from the user
-
-### Phase 1
-
-- **Adversarial check is not optional** — Step 4 fires for every recommendation; a recommendation that has not been challenged is incomplete
-- **Tag calibration** — source-quality tags must discriminate; taste/preference items cap at `[Medium]`, and an all-`[High]` table is a signal to re-examine the evidence, not a sign of success
-- **Dynamic source selection** — read source-catalog, select by domain; never default to "docs + community" for everything
-- **context7 scope** — context7 is for library/framework API documentation only; use WebSearch for SEO, architecture decisions, and community experience
-- **Open Questions: research gate** — before surfacing any candidate question, ask: "could research resolve this?" If yes, research it now. Only ask the user for decisions that depend on their preferences, constraints, or situation that no search can resolve. Max 2. Omit section entirely if nothing genuinely requires user input.
+- **Step 4 is not optional** — both passes fire for every recommendation; one that has not been challenged, or that rests on a source nobody opened, is incomplete
+- **Give a concrete recommendation** — "it depends" with no follow-up is not acceptable
 - **Open Questions handoff** — if user confirms to proceed without answering Open Questions, surface them again before implementing; do not silently pick defaults
+- **Research only** — surface the report; do not implement findings
