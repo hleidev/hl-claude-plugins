@@ -11,6 +11,12 @@
       "source": "./plugins/research",
       "description": "Structured external-information research that produces a decision-grade report.",
       "category": "research"
+    },
+    {
+      "name": "java",
+      "source": "./plugins/java",
+      "description": "Enterprise Java/Spring code review against Alibaba P3C and Google Engineering Practices.",
+      "category": "code-quality"
     }
   ]
 }

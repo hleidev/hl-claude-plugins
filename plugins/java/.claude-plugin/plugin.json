@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "java",
+  "version": "0.1.0",
+  "description": "Enterprise Java/Spring code review against Alibaba P3C and Google Engineering Practices.",
+  "license": "MIT",
+  "repository": "https://github.com/hleidev/hl-skills",
+  "author": {
+    "name": "Harry",
+    "email": "harryleiyyds@gmail.com"
+  },
+  "keywords": ["java", "spring", "code-review", "p3c", "code-quality"]
+}

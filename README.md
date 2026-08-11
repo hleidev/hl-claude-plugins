@@ -27,15 +27,17 @@ This repository is a **plugin marketplace**: one repo that holds a growing set o
 
 # 2. Install a plugin
 /plugin install research@hl-skills
+/plugin install java@hl-skills
 ```
 
 ## Plugins
 
 | Plugin | Skills | Invoke | What it does |
 |---|---|---|---|
-| `research` | `reporting` | `/research:reporting` | Structured external-information research that produces a decision-grade report |
+| `research` | `research` | `/research:research` | Structured external-information research that produces a decision-grade report |
+| `java` | `review` | `/java:review` | Enterprise Java/Spring code review against Alibaba P3C and Google Engineering Practices |
 
-> The `research` plugin defaults to **Chinese** output. To use another language, change the "Output language" setting in its `SKILL.md`, or just ask in your own language when you invoke it.
+> Both plugins default to **Chinese** output. To use another language, change the "Output language" setting in the skill's `SKILL.md`, or just ask in your own language when you invoke it.
 
 More plugins will be added to this same repo over time — adding one never requires a new repository.
 
@@ -46,12 +48,18 @@ hl-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # registry: lists every plugin below
 ├── plugins/
-│   └── research/
+│   ├── research/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json        # plugin manifest
+│   │   └── skills/
+│   │       └── research/
+│   │           └── SKILL.md       # the skill
+│   └── java/
 │       ├── .claude-plugin/
-│       │   └── plugin.json        # plugin manifest
+│       │   └── plugin.json
 │       └── skills/
-│           └── reporting/
-│               └── SKILL.md       # the skill
+│           └── review/
+│               └── SKILL.md
 ├── README.md
 ├── README.zh.md
 └── LICENSE

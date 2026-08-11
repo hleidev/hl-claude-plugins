@@ -27,15 +27,17 @@
 
 # 2. 安装某个插件
 /plugin install research@hl-skills
+/plugin install java@hl-skills
 ```
 
 ## 插件
 
 | 插件 | skill | 调用 | 作用 |
 |---|---|---|---|
-| `research` | `reporting` | `/research:reporting` | 结构化的对外信息调研，产出一份可决策的报告 |
+| `research` | `research` | `/research:research` | 结构化的对外信息调研，产出一份可决策的报告 |
+| `java` | `review` | `/java:review` | 企业级 Java/Spring 代码评审，对照阿里巴巴 P3C 与 Google 工程实践 |
 
-> `research` 插件默认**中文**输出。想换语言，改其 `SKILL.md` 里的 "Output language" 设置，或调用时直接用你的语言提问即可。
+> 两个插件均默认**中文**输出。想换语言，改对应 skill 的 `SKILL.md` 里的 "Output language" 设置，或调用时直接用你的语言提问即可。
 
 后续新插件会持续加进这同一个仓库——新增插件**永远不需要新建仓库**。
 
@@ -46,12 +48,18 @@ hl-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # 注册表：列出下面所有插件
 ├── plugins/
-│   └── research/
+│   ├── research/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json        # 插件清单
+│   │   └── skills/
+│   │       └── research/
+│   │           └── SKILL.md       # skill 本体
+│   └── java/
 │       ├── .claude-plugin/
-│       │   └── plugin.json        # 插件清单
+│       │   └── plugin.json
 │       └── skills/
-│           └── reporting/
-│               └── SKILL.md       # skill 本体
+│           └── review/
+│               └── SKILL.md
 ├── README.md
 ├── README.zh.md
 └── LICENSE
