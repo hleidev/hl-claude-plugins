@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "research",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Structured external-information research that produces a decision-grade report.",
   "license": "MIT",
   "repository": "https://github.com/hleidev/hl-skills",
@@ -9,5 +9,5 @@
     "name": "Harry",
     "email": "harryleiyyds@gmail.com"
   },
-  "keywords": ["research", "reporting", "comparison", "decision-support"]
+  "keywords": ["research", "comparison", "decision-support"]
 }
