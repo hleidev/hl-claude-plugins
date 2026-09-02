@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "description": "Structured external-information research that produces a decision-grade report.",
   "license": "MIT",
-  "repository": "https://github.com/hleidev/hl-skills",
+  "repository": "https://github.com/hleidev/hl-claude-plugins",
   "author": {
     "name": "Harry",
     "email": "harryleiyyds@gmail.com"

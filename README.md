@@ -1,6 +1,6 @@
 <div align="center">
 
-# hl-skills
+# hl-claude-plugins
 
 **Claude Code skills, shipped as installable plugins.**
 
@@ -23,11 +23,11 @@ This repository is a **plugin marketplace**: one repo that holds a growing set o
 
 ```bash
 # 1. Add this marketplace
-/plugin marketplace add hleidev/hl-skills
+/plugin marketplace add hleidev/hl-claude-plugins
 
 # 2. Install a plugin
-/plugin install research@hl-skills
-/plugin install java@hl-skills
+/plugin install research@hl-claude-plugins
+/plugin install java@hl-claude-plugins
 ```
 
 ## Plugins
@@ -44,7 +44,7 @@ More plugins will be added to this same repo over time — adding one never requ
 ## Repository layout
 
 ```
-hl-skills/
+hl-claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json          # registry: lists every plugin below
 ├── plugins/

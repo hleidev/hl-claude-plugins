@@ -1,6 +1,6 @@
 <div align="center">
 
-# hl-skills
+# hl-claude-plugins
 
 **一套 Claude Code skills 合集，以可安装的插件形式分发。**
 
@@ -23,11 +23,11 @@
 
 ```bash
 # 1. 添加本 marketplace
-/plugin marketplace add hleidev/hl-skills
+/plugin marketplace add hleidev/hl-claude-plugins
 
 # 2. 安装某个插件
-/plugin install research@hl-skills
-/plugin install java@hl-skills
+/plugin install research@hl-claude-plugins
+/plugin install java@hl-claude-plugins
 ```
 
 ## 插件
@@ -44,7 +44,7 @@
 ## 仓库结构
 
 ```
-hl-skills/
+hl-claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json          # 注册表：列出下面所有插件
 ├── plugins/
